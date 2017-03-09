@@ -1,5 +1,5 @@
 ---
-stack_env: example_ci-full
+stack_env: ci-full-ubuntu
 ursula_os: 'ubuntu'
 
 state_path_base: /opt/stack/data
