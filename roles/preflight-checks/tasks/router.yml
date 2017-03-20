@@ -1,0 +1,22 @@
+---
+- name: checking router {{ item.name }}
+  environment:
+    PYTHONPATH: "{{ basevenv_lib_dir|default(omit) }}"
+  os_router:
+    name: "{{ item.name }}"
+    auth:
+      auth_url: "{{ endpoints.auth_uri }}"
+      project_name: admin
+      username: admin
+      password: "{{ secrets.admin_password }}"
+    validate_certs: "{{ validate_certs|default(omit) }}"
+
+- debug:
+    var: router
+
+- block:
+  - name: ensure {{ item.name }} router external gateway IP
+    assert:
+      that: true
+      msg: "Could not find matching attribute for router external gateway IP."
+    when: router.external_gateway_info is defined
